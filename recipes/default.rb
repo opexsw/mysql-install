@@ -24,6 +24,8 @@ mysql_service 'mysql' do
   action [:create, :start]
 end
  
+if node['platform_family'] == 'debian'
+
 # create mysql directory 
 directory '/etc/mysql' do
   action :create
@@ -46,7 +48,8 @@ end
 
 # database creation
 execute "create db #{node['mysql-install']['dbname']}" do
-    command "/usr/bin/mysql -u root -D mysql -r -B -N -e \"CREATE DATABASE #{node['mysql-install']['dbname'] } CHARACTER SET utf8 COLLATE utf8_bin\""
+    command "sudo mysql -uroot -p#{node['mysql-install']['password']} -e \"create database #{node['mysql-install']['dbname']}\""
+end
 end
 
 
