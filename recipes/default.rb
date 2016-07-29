@@ -24,10 +24,24 @@ mysql_service 'mysql' do
   action [:create, :start]
 end
  
-# change persmission mysql 
-execute 'change-owner' do
-  command 'chown -r root:root /run/mysql-mysql/'
+# create mysql directory 
+directory '/etc/mysql' do
+  action :create
 end
 
+# copy conf file of mysql
+execute 'copy-config-data' do
+  command 'cp -r /etc/mysql-mysql/* /etc/mysql/'
+end
+
+
+# change persmission mysql 
+execute 'change-owner' do
+  command 'chown  root:root -R  /etc/mysql/'
+end
+
+
+
+ 
  
 
