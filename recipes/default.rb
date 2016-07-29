@@ -40,6 +40,14 @@ execute 'change-owner' do
   command 'chown  root:root -R  /etc/mysql/'
 end
 
+service "mysql" do
+  action :restart
+end
+
+# database creation
+execute "create db #{node['mysql-install']['dbname']}" do
+    command "/usr/bin/mysql -u root -D mysql -r -B -N -e \"CREATE DATABASE #{node['mysql-install']['dbname'] } CHARACTER SET utf8 COLLATE utf8_bin\""
+end
 
 
  
