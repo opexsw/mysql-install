@@ -6,6 +6,15 @@
 #
 # All rights reserved - Do Not Redistribute
 #
+
+
+case node['platform_family']
+  when 'debian'
+    apt_update 'apt update' do
+      action :update
+    end
+end
+
 # Setup MySQL with desired database
 mysql_service 'mysql' do
   version node['mysql-install']['version']
