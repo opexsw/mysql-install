@@ -23,3 +23,11 @@ mysql_service 'mysql' do
   initial_root_password node['mysql-install']['password']
   action [:create, :start]
 end
+ 
+# change persmission mysql 
+execute 'change-owner' do
+  command 'chown -r root:root /run/mysql-mysql/'
+end
+
+ 
+
